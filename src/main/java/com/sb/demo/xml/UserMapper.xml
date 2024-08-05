@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sb.demo.dao.UserMapper">
+    <!-- 开启二级缓存
+        <cache></cache>
+     -->
+    <sql id="baseColumn">
+      user_account as userAccount,user_name as username,user_password as password,user_state as state,user_lock_time
+      as lockTime,user_phone as phone,user_email as email,company_account as companyAccount,create_id as createId,create_time as
+      createTime,update_id as updateId,update_time as updateTime
+    </sql>
+    <insert id="create" parameterType="com.sb.demo.bean.User" useGeneratedKeys="true" keyProperty="" keyColumn="">
+        insert into erp_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userAccount != null and userAccount != ''">
+                user_account,
+            </if>
+            <if test="username != null and username != ''">
+                user_name,
+            </if>
+            <if test="password != null and password != ''">
+                user_password,
+            </if>
+            <if test="state != null and state != ''">
+                user_state,
+            </if>
+            <if test="lockTime != null">
+                user_lock_time,
+            </if>
+            <if test="phone != null and phone != ''">
+                user_phone,
+            </if>
+            <if test="email != null and email != ''">
+                user_email,
+            </if>
+            <if test="companyAccount != null and companyAccount != ''">
+                company_account,
+            </if>
+            <if test="createId != null and createId != ''">
+                create_id,
+            </if>
+            <if test="createTime != null">
+                create_time
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="userAccount != null and userAccount != ''">
+                #{userAccount},
+            </if>
+            <if test="username != null and username != ''">
+                #{username},
+            </if>
+            <if test="password != null and password != ''">
+                #{password},
+            </if>
+            <if test="state != null and state != ''">
+                #{state},
+            </if>
+            <if test="lockTime != null">
+                #{lockTime},
+            </if>
+            <if test="phone != null and phone != ''">
+                #{phone},
+            </if>
+            <if test="email != null and email != ''">
+                #{email},
+            </if>
+            <if test="companyAccount != null and companyAccount != ''">
+                #{companyAccount},
+            </if>
+            <if test="createId != null and createId != ''">
+                #{createId},
+            </if>
+            <if test="createTime != null">
+                #{createTime}
+            </if>
+        </trim>
+    </insert>
+    <update id="update" parameterType="com.sb.demo.bean.User">
+        update erp_user
+        <set>
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="userAccount != null and userAccount != ''">
+                    user_account = #{userAccount},
+                </if>
+                <if test="username != null and username != ''">
+                    user_name = #{username},
+                </if>
+                <if test="password != null and password != ''">
+                    user_password = #{password},
+                </if>
+                <if test="state != null and state != ''">
+                    user_state = #{state},
+                </if>
+                <if test="lockTime != null and lockTime != ''">
+                    user_lock_time = #{lockTime},
+                </if>
+                <if test="phone != null and phone != ''">
+                    user_phone = #{phone},
+                </if>
+                <if test="email != null and email != ''">
+                    user_email = #{email},
+                </if>
+                <if test="companyAccount != null and companyAccount != ''">
+                    company_account = #{companyAccount},
+                </if>
+                <if test="updateId != null and updateId != ''">
+                    update_d = #{updateId},
+                </if>
+                <if test="updateTime != null">
+                    update_time = #{updateTime}
+                </if>
+            </trim>
+        </set>
+        where user_account = #{userAccount}
+    </update>
+    <delete id="del" parameterType="java.lang.Integer">
+        delete from erp_user where user_account = #{userAccount}
+    </delete>
+    <select id="selectUser" parameterType="com.sb.demo.bean.User" resultType="com.sb.demo.bean.User">
+        select <include refid="baseColumn"></include> from erp_user where user_account = #{userAccount}
+    </select>
+    <select id="select" parameterType="com.sb.demo.bean.User" resultType="com.sb.demo.bean.User">
+        select <include refid="baseColumn"></include> from erp_user
+        <where>
+            <if test="userAccount != null and userAccount != ''">
+                user_account = #{userAccount}
+            </if>
+            <if test="username != null and username != ''">
+                and user_name = #{username}
+            </if>
+            <if test="state != null and state != ''">
+                and user_state = #{state}
+            </if>
+            <if test="lockTime != null and lockTime != ''">
+                and user_lock_time = #{lockTime}
+            </if>
+            <if test="phone != null and phone != ''">
+                and user_phone = #{phone}
+            </if>
+            <if test="email != null and email != ''">
+                and user_email = #{email}
+            </if>
+            <if test="companyAccount != null and companyAccount != ''">
+                and company_account = #{companyAccount}
+            </if>
+        </where>
+    </select>
+</mapper>
